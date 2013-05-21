@@ -31,11 +31,10 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="9" />
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17" />
 
     <supports-screens
         android:anyDensity="true"
-        android:xlargeScreens="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
@@ -181,6 +180,16 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="false" />
+        
+        <service android:name=".services.TriggerManagerService">
+            <intent-filter>
+                <action
+                        android:name="org.odk.collect.android.services.TriggerManagerService"/>
+            </intent-filter>
+        </service>
+        <activity
+                android:name=".services.MainActivity"
+                android:label="@string/app_name" />
     </application>
 
 </manifest>

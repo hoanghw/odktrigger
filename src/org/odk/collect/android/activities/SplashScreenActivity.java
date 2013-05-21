@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import org.odk.collect.android.services.TriggerManagerService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,7 +110,7 @@ public class SplashScreenActivity extends Activity {
 
 
     private void endSplashScreen() {
-
+        startService(new Intent(SplashScreenActivity.this, TriggerManagerService.class));
         // launch new activity and close splash screen
         startActivity(new Intent(SplashScreenActivity.this, MainMenuActivity.class));
         finish();

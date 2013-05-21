@@ -80,7 +80,8 @@ public class WidgetFactory {
                     	if (appearance.startsWith("printer")) {
                             questionWidget = new ExPrinterWidget(context, fep);
                     	} else if (appearance.startsWith("ex:")) {
-                            questionWidget = new ExStringWidget(context, fep);
+                            //questionWidget = new ExStringWidget(context, fep);
+			                questionWidget = new GuardWidget(context, fep);
                     	} else if (appearance.equals("numbers")) {
                             questionWidget = new StringNumberWidget(context, fep);
                         } else {
