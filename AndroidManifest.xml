@@ -188,7 +188,7 @@
             </intent-filter>
         </service>
         <activity
-                android:name=".services.MainActivity"
+                android:name=".services.TriggerManagerActivity"
                 android:label="@string/app_name" />
     </application>
 

@@ -8,21 +8,22 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
 
-public class MainActivity extends Activity{
-    private static final String TAG = "MainActivity";
+public class TriggerManagerActivity extends Activity{
+    private static final String TAG = "TriggerManagerActivity";
     ITMService service;
     TriggerManagerServiceConnection connection;
     String mAnswer;
-    String qid = "q1";
+    String qid;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        qid = intent.getStringExtra("qid");
 
-        setContentView(R.layout.main_menu);
+        setContentView(R.layout.trigger);
         TextView mainMenuMessageLabel = (TextView) findViewById(R.id.main_menu_header);
-        mainMenuMessageLabel.setText("Please wait till there's a notification");
+        mainMenuMessageLabel.setText("Please wait till there's a notification.");
 
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         switch (mSharedPreferences.getInt(qid, 0)){
@@ -47,7 +48,7 @@ public class MainActivity extends Activity{
         public void onServiceConnected(ComponentName name, IBinder boundService) {
             service = ITMService.Stub.asInterface((IBinder) boundService);
             Log.d(TAG, "onServiceCOnnected() connected");
-            Toast.makeText(MainActivity.this, "Service connected",
+            Toast.makeText(TriggerManagerActivity.this, "Service connected",
                     Toast.LENGTH_LONG).show();
 
             try {
@@ -69,7 +70,7 @@ public class MainActivity extends Activity{
 
             service = null;
             Log.d(TAG, "onServiceDisconnected() disconnected");
-            Toast.makeText(MainActivity.this,
+            Toast.makeText(TriggerManagerActivity.this,
                     "Service disconnected",
                     Toast.LENGTH_LONG).show();
         }
@@ -123,9 +124,19 @@ public class MainActivity extends Activity{
         releaseService();
     }
     private void returnClearance() {
+        SharedPreferences mSharedPreferences= PreferenceManager.getDefaultSharedPreferences(TriggerManagerActivity.this);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(qid,2);
+        editor.commit();
+
         Intent intent = new Intent();
         intent.putExtra("value", mAnswer);
         setResult(RESULT_OK, intent);
         finish();
+    }
+    @Override
+    public void onBackPressed(){
+        Toast.makeText(TriggerManagerActivity.this, "You can't go back.  Please press HOME and wait for notification.",
+                Toast.LENGTH_LONG).show();
     }
 }

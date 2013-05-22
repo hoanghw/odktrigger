@@ -1,28 +1,25 @@
 package org.odk.collect.android.widgets;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.StringData;
 import org.javarosa.form.api.FormEntryPrompt;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.AdvanceToNextListener;
-import org.odk.collect.android.logic.FormController;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
 import android.text.method.TextKeyListener.Capitalize;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
-import android.widget.Toast;
-import org.odk.collect.android.services.MainActivity;
+import org.odk.collect.android.logic.FormController;
+import org.odk.collect.android.services.TriggerManagerActivity;
 
 public class GuardWidget extends QuestionWidget implements IBinaryWidget {
 
@@ -47,15 +44,37 @@ public class GuardWidget extends QuestionWidget implements IBinaryWidget {
         if (s!=null) {
             mAnswer.setText(s);
         }else {
-            Intent i = new Intent(context, MainActivity.class);
+            Intent i = new Intent(context, TriggerManagerActivity.class);
             try {
+                i.putExtra("qid",mPrompt.getIndex().toString());
                 Collect.getInstance().getFormController().setIndexWaitingForData(mPrompt.getIndex());
                 fireActivity(i);
             } catch (ActivityNotFoundException e) {
 
             }
         }
+        mAnswer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+                FormController formController = Collect.getInstance()
+                        .getFormController();
+                formController.stepToNextScreenEvent();
+            }
+
+        });
         addView(mAnswer);
 
     }

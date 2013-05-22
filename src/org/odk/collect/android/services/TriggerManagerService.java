@@ -42,14 +42,12 @@ public class TriggerManagerService extends Service {
                 if (cb!=null) mCallbacks.unregister(cb);
             }
             public void setTrigger(String qid) {
-                mHandler.sendMessageDelayed(mHandler.obtainMessage(REPORT_MSG,"true"),6*1000);
-                editor.putInt(qid,2);
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(REPORT_MSG,"true"),10*1000);
+                editor.putInt(qid,1);
                 editor.commit();
             }
         };
     }
-
-
 
     final RemoteCallbackList<ITMServiceCallback> mCallbacks
             = new RemoteCallbackList<ITMServiceCallback>();
