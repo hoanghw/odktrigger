@@ -21,6 +21,13 @@ import android.widget.TableLayout;
 import org.odk.collect.android.logic.FormController;
 import org.odk.collect.android.services.TriggerManagerActivity;
 
+
+/*
+    Based on ODK ExStringWidget
+    Added 2 features:
+        1/ Automatically fire TriggerManagerActivity when there's no answer to the Trigger question
+        2/ Automatically advance to the next question after TriggerManagerActivity returns the answer
+ */
 public class GuardWidget extends QuestionWidget implements IBinaryWidget {
 
     protected EditText mAnswer;
